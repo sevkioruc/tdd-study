@@ -9,10 +9,6 @@ const todoSchema = new Schema({
 	content: {
 		type: String,
 		require: true
-	},
-	createdAt: {
-		type: Date,
-		default: Date.now
 	}
 });
 

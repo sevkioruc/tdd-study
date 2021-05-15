@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 
+const Todo = require('../models/Todo');
+const dummyTodos = require('./data/todo.json');
+
+require('dotenv').config();
+
 module.exports.connect = async () => {
 	const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true }
 	await mongoose.connect(process.env.mongoURI, mongoOptions);
@@ -17,4 +22,10 @@ module.exports.clearDatabase = async () => {
 		const collection = collections[key];
 		await collection.deleteMany();
 	}
+}
+
+module.exports.initDatabase = async () => {
+	Todo.insertMany(dummyTodos)
+		.then(() => console.log("Data inserted"))
+		.catch(err => console.log(err));
 }

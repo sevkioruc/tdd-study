@@ -7,6 +7,11 @@ describe('Todos', () => {
 	beforeAll(async () => await dbHandler.connect());
 
 	/**
+	 * Database being started with dummy data for each test
+	 */
+	beforeEach(async () => await dbHandler.initDatabase());
+
+	/**
 	 * Clear all test data after every test.
 	 */
 	afterEach(async () => await dbHandler.clearDatabase());
