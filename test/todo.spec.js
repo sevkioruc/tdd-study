@@ -43,4 +43,20 @@ describe('Todos', () => {
 		expect(todos).toEqual(dummyTodos);
 	});
 
+	it('It be able to create a new item of todo', async () => {
+		const response =
+			await request(app)
+				.post('/todos')
+				.send({
+					title: 'New title',
+					content: 'New content'
+				});
+
+		expect(response.statusCode).toBe(201);
+		expect(response.body.message).toBe('Todo was created successfully');
+
+		const getResponse = await request(app).get('/todos');
+		expect(getResponse.body.length).toBe(5);
+	});
+
 });
