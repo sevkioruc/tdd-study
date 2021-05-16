@@ -1,4 +1,8 @@
 const dbHandler = require('./db-handler');
+const dummyTodos = require('./data/todo.json');
+
+const request = require('supertest');
+const app = require('../server');
 
 describe('Todos', () => {
 	/**
@@ -20,5 +24,23 @@ describe('Todos', () => {
 	 * Close the database connection
 	 */
 	afterAll(async () => await dbHandler.closeDatabase());
+
+	it('It should get all todos', async () => {
+		let tempTodo;
+		const todos = [];
+
+		const response = await request(app).get('/todos');
+
+		response.body.forEach(todo => {
+			tempTodo = {};
+			tempTodo.title = todo.title;
+			tempTodo.content = todo.content;
+			todos.push(tempTodo);
+		});
+
+		expect(response.statusCode).toBe(200);
+		expect(todos.length).toBe(4);
+		expect(todos).toEqual(dummyTodos);
+	});
 
 });

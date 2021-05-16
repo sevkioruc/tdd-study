@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const todoRoutes = require('./routes/todo-routes');
+
 require('dotenv').config();
 
 const app = express();
@@ -26,3 +28,7 @@ app.listen(port, (err) => {
 	if (err)
 		console.log(err);
 });
+
+app.use('/', todoRoutes);
+
+module.exports = app;
